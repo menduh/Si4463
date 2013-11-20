@@ -44,7 +44,7 @@
             <InvalidFlash>1</InvalidFlash>
           </TargetStatus>
           <OutputDirectory>.\out\</OutputDirectory>
-          <OutputName>Si4436</OutputName>
+          <OutputName>Si4463</OutputName>
           <CreateExecutable>1</CreateExecutable>
           <CreateLib>0</CreateLib>
           <CreateHexFile>1</CreateHexFile>
@@ -397,6 +397,11 @@
               <FileType>1</FileType>
               <FilePath>.\Source\main.c</FilePath>
             </File>
+            <File>
+              <FileName>board.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\Source\board.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -421,6 +426,11 @@
               <FileName>drv_spi.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\Source\drv_spi.c</FilePath>
+            </File>
+            <File>
+              <FileName>drv_gpio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Source\drv_gpio.c</FilePath>
             </File>
           </Files>
         </Group>

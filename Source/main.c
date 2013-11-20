@@ -8,36 +8,33 @@ int main(void)
   SysTick_Config(SystemCoreClock / 1000);
   
   configureSPI();
+  configureGPIO();
   
-  //set up gpio
-  RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOE, ENABLE);
-  
-  GPIO_InitTypeDef GPIO_InitStructure;
-  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_OUT;
-  GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
-  GPIO_InitStructure.GPIO_Pin = 0xFF00;
-  GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL;
-  GPIO_InitStructure.GPIO_Speed = GPIO_Speed_2MHz;
-  
-  GPIO_ResetBits(GPIOE, 0xFF00);
-  GPIO_Init(GPIOE, &GPIO_InitStructure);
-  
-  uint16_t thispin = 0x00;
+//   uint16_t thispin = 0x00;
+//   uint8_t up = 0x01;
   
   while(1)
   {
-    thispin = 0x0100;
-    while (thispin != 0x0000) {
-      GPIO_SetBits(GPIOE, thispin);
-      thispin = (thispin << 1);
-      delay(100);
-    }
-    
-    thispin = 0x0100;
-    while (thispin != 0x0000) {
-      GPIO_ResetBits(GPIOE, thispin);
-      thispin = (thispin << 1);
-      delay(100);
-    }
+//     thispin = 0x0100;
+//     while (thispin != 0x0000) {
+//       if(up&0x01)
+//       {
+//         GPIO_SetBits(GPIOE, thispin);
+//         thispin = thispin << 1;
+//       } else {
+//         GPIO_ResetBits(GPIOE, thispin);
+//         thispin = thispin << 1;
+//       }
+//       delay(100);
+//     }
+//     
+//     up ^= 0x01;
+    GPIO_SetBits(GPIOA, GPIO_Pin_4);
+    SPI_I2S_SendData16(SPI1, 0xA5);
+    while(!SPI_I2S_GetFlagStatus(SPI1, SPI_I2S_FLAG_TXE));
+    while(SPI_I2S_GetFlagStatus(SPI1, SPI_I2S_FLAG_BSY));
+    GPIO_ResetBits(GPIOA, GPIO_Pin_4);
+    GPIOE->ODR ^= 0xFF00;
+    delay(100);
   }
 }
